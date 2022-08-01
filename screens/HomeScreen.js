@@ -6,7 +6,7 @@ import {
   TextInput,
   ScrollView,
 } from "react-native";
-import React, { useLayoutEffect } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import {
   UserIcon,
@@ -16,17 +16,36 @@ import {
 } from "react-native-heroicons/outline";
 import Categories from "../components/Categories";
 import FeaturedRow from "../components/FeaturedRow";
+import sanityClient from "../sanity";
 
 const HomeScreen = () => {
   // Access to the navigation object
   const navigation = useNavigation();
 
-  // As soon as the screen mounts, do whatever is inside the effect
+  const [featuredCategories, setFeaturedCategories] = useState([]);
+
+  // Runs as soon as the UI (screen) mounts
   useLayoutEffect(() => {
     // Allows to modify default RN header
     navigation.setOptions({
       headerShown: false,
     });
+  }, []);
+
+  useEffect(() => {
+    sanityClient
+      .fetch(
+        `*[_type == "featured"] {
+      ...,
+      restaurants[]->{
+        ...,
+        dishes[]->
+      }
+    }`
+      )
+      .then((data) => {
+        setFeaturedCategories(data);
+      });
   }, []);
 
   return (
@@ -68,25 +87,14 @@ const HomeScreen = () => {
         <Categories />
 
         {/* Featured */}
-        <FeaturedRow
-          id="1"
-          title="Featured"
-          description="People in your area love that food!"
-        />
-
-        {/* Tasty Discounts */}
-        <FeaturedRow
-          id="2"
-          title="Mega Discounts"
-          description="You won't believe how cheap it gets!"
-        />
-
-        {/* Offers near you! */}
-        <FeaturedRow
-          id="3"
-          title="Restaurants near you!"
-          description="Why not grab something local? Quick delivery guaranteed!"
-        />
+        {featuredCategories?.map((category) => (
+          <FeaturedRow
+            key={category._id}
+            id={category._id}
+            title={category.name}
+            description={category.short_description}
+          />
+        ))}
       </ScrollView>
     </SafeAreaView>
   );
