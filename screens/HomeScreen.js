@@ -46,7 +46,7 @@ const HomeScreen = () => {
       <View className="flex-row pb-3 items-center mx-4 space-x-2">
         <Image
           source={{ uri: "https://i.postimg.cc/NfDBYkP4/image.png" }}
-          className="h-7 w-7 bg-gray-300 p-4 rounded-full"
+          className="h-5 w-5 bg-gray-300 p-4 rounded-full"
         />
         <View className="flex-1">
           <Text className="font-bold text-gray-400 text-xs">Deliver Now!</Text>

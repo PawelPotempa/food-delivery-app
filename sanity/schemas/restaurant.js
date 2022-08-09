@@ -26,7 +26,7 @@ export default {
       title: "Latitude of the Restaurant",
     },
     {
-      name: "lng",
+      name: "long",
       type: "number",
       title: "Longitude of the Restaurant",
     },
