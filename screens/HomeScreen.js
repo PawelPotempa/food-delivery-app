@@ -24,14 +24,6 @@ const HomeScreen = () => {
 
   const [featuredCategories, setFeaturedCategories] = useState([]);
 
-  // Runs as soon as the UI (screen) mounts
-  useLayoutEffect(() => {
-    // Allows to modify default RN header
-    navigation.setOptions({
-      headerShown: false,
-    });
-  }, []);
-
   useEffect(() => {
     sanityClient
       .fetch(

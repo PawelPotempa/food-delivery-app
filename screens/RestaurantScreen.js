@@ -50,14 +50,6 @@ const RestaurantScreen = () => {
     );
   }, []);
 
-  // Runs as soon as the UI (screen) mounts
-  useLayoutEffect(() => {
-    // Allows to modify default RN header
-    navigation.setOptions({
-      headerShown: false,
-    });
-  }, []);
-
   return (
     <>
       <BasketIcon />
